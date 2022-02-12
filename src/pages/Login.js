@@ -1,14 +1,16 @@
-import './Login.css';
+import '../Login.css';
+import { useNavigate } from "react-router-dom";
 
-function Login(props) {
+function Login() {
 
-    const interLogin = (e) => {
-        e.preventDefault()
-        props.history.push('/')
+    const navigate = useNavigate();
+
+    const enterLogin = (e) => {
+        navigate('/');
     }
 
     return (
-        <form className='form' onSubmit={interLogin}>
+        <form className='form' onSubmit={enterLogin}>
             <div className='form-mail'>
                 <span>E-mail </span>
                 <input
