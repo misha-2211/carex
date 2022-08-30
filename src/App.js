@@ -6,17 +6,25 @@ import About from "./pages/About";
 import Notfound from "./pages/Notfound";
 
 import Layout from "./components/Layout";
+import RequireAuth from "./hoc/RequireAuth";
+import { AuthProvider } from "./hoc/AuthProvider";
 
 function App() {
     return (
-        <Routes>
-            <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="about" element={<About />} />
-                <Route path="login" element={<Login />} />
-                <Route path="*" element={<Notfound />} />
-            </Route>
-        </Routes>
+        <AuthProvider>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="about" element={
+                        <RequireAuth>
+                            <About />
+                        </RequireAuth>
+                    } />
+                    <Route path="login" element={<Login />} />
+                    <Route path="*" element={<Notfound />} />
+                </Route>
+            </Routes>
+        </AuthProvider>
     );
 }
 

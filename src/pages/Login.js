@@ -1,12 +1,20 @@
 import '../Login.css';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from '../hook/useAuth';
 
 function Login() {
-
     const navigate = useNavigate();
+    const location = useLocation();
+    const { signin } = useAuth();
 
-    const enterLogin = (e) => {
-        navigate('/');
+    const fromPage = location.state?.from?.pathname || '/';
+
+    const enterLogin = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const user = form.useremail.value;
+
+        signin(user, () => navigate(fromPage, { replace: true }));
     }
 
     return (
@@ -14,7 +22,7 @@ function Login() {
             <div className='form-mail'>
                 <span>E-mail </span>
                 <input
-                    className="mail" placeholder='Your e-mail' required
+                    className="mail" name='useremail' placeholder='Your e-mail' required
                 />
             </div>
 
